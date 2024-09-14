@@ -1,16 +1,5 @@
 <template>
-  <div class="invalid-feedback">
-    {{ message }}
+  <div style="color: red;">
+    <slot />
   </div>
 </template>
-
-<script>
-export default {
-  props: {
-    message: {
-      required: true
-    }
-  }
-}
-
-</script>

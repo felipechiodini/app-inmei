@@ -4,13 +4,13 @@
       <img width="150px" src="/logo.png">
       <h1>Login</h1>
       <p>Acesse sua conta para gerenciar sua loja.</p>
-      <form class="d-flex flex-column" @submit.prevent="onSubmit()">
+      <form class="d-flex flex-column" novalidate @submit.prevent="onSubmit()">
         <label for="login-email">Email</label>
         <BaseInput required id="login-email" type="email" v-model="form.email" />
-        <BaseError message="Informe o email" />
+        <BaseError>{{ errors.get('email') }}</BaseError>
         <label for="login-password" class="mt-2">Senha</label>
         <BaseInput required id="login-password" type="password" v-model="form.password" />
-        <BaseError message="Informe a senha" />
+        <BaseError>{{ errors.get('password') }}</BaseError>
         <RouterLink class="mt-1" :to="{ name: 'auth.password-recovery' }">
           Esqueci minha senha
         </RouterLink>
@@ -40,6 +40,7 @@ import { useUserStore } from '@/stores/user.js'
 import { request } from '@/js/api.js'
 import BaseError from '@/components/BaseError.vue'
 import { freeTest } from '@/js/Links'
+import useValidationErrors from '@/js/useValidationErrors'
 
 export default {
   components: {
@@ -55,7 +56,7 @@ export default {
         email: null,
         password: null
       },
-      error: null,
+      errors: new useValidationErrors(),
       submiting: false,
       link: freeTest()
     }
@@ -74,7 +75,7 @@ export default {
 
         this.$router.push({ name: 'stores.choose' })
       } catch (error) {
-        this.error = error.response.data.message
+        this.errors.record(error.response.data.errors)
       }
 
       this.submiting = false
