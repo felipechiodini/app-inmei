@@ -6,17 +6,17 @@
       <p>Crei sua conta grátis e começe seu delivery com a RapidEats.</p>
       <form class="d-flex flex-column" novalidate @submit.prevent="onSubmit">
         <label for="nome">Nome</label>
-        <input class="form-control" type="text" required id="nome" v-model="form.name" />
-        <small style="color: red;">{{ errors.get('name') }}</small>
-        <label for="login-cellphone" class="mt-2">Celular</label>
-        <input class="form-control" required id="login-cellphone" type="tel" v-model="form.cellphone" />
-        <small style="color: red;">{{ errors.get('cellphone') }}</small>
+        <input class="form-control" type="text" id="nome" v-model="form.name" />
+        <BaseError>{{ errors.get('name') }}</BaseError>
         <label for="login-email">Email</label>
-        <input class="form-control" required id="login-email" type="email" v-model="form.email" />
-        <small style="color: red;">{{ errors.get('email') }}</small>
+        <input class="form-control" id="login-email" type="email" v-model="form.email" />
+        <BaseError>{{ errors.get('email') }}</BaseError>
+        <label for="login-cellphone" class="mt-2">Celular</label>
+        <input class="form-control"  v-maska data-maska="(##) #####-####" id="login-cellphone" type="tel" v-model="form.cellphone" />
+        <BaseError>{{ errors.get('cellphone') }}</BaseError>
         <label for="login-password" class="mt-2">Senha</label>
-        <input class="form-control" required id="login-password" type="password" v-model="form.password" />
-        <small style="color: red;">{{ errors.get('password') }}</small>
+        <input class="form-control" id="login-password" type="password" v-model="form.password" />
+        <BaseError>{{ errors.get('password') }}</BaseError>
         <div class="mt-2">
           <small>
             This site is protected by reCAPTCHA and the Google

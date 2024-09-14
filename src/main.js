@@ -11,6 +11,7 @@ import { Money3Directive } from 'v-money3'
 import Modal from './js/Plugins/Modal'
 import { request } from '@/js/api.js'
 import General from '@/js/Mixins/General.js'
+import { vMaska } from 'maska'
 
 import './assets/main.scss'
 import 'primevue/resources/themes/aura-light-green/theme.css'
@@ -50,6 +51,7 @@ app.use(ToastService)
 app.mixin(General)
 app.use(Modal)
 app.use(PrimeVue)
+app.directive('maska', vMaska)
 app.use(pinia)
 app.use(router)
 app.mount('#app')
