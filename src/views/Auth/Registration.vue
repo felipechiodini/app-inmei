@@ -48,7 +48,6 @@ import { mapActions } from 'pinia'
 import { useUserStore } from '@/stores/user.js'
 import { request } from '@/js/api.js'
 import BaseError from '@/components/BaseError.vue'
-import { freeTest } from '@/js/Links'
 
 export default {
   components: {
@@ -72,26 +71,16 @@ export default {
   },
   methods: {
     ...mapActions(useUserStore, ['setToken', 'setUser', 'setMenus']),
-    async onSubmit(t) {
+    async onSubmit() {
       this.submiting = true
 
       const token = await grecaptcha.execute(import.meta.env.VITE_RECAPTHCA_KEY, { action: 'submit' })
 
       try {
-        await request().post('user', {
-          ...this.form,
-          recaptcha_token: token
-        })
+        const { data } = await request().post('user', { ...this.form, recaptcha_token: token })
 
-        let { data } = await request().post('auth/login', { 
-          email: this.form.email,
-          password: this.form.password
-        })
-
-        this.setToken(data.access_token)
-
-        const response = await request().get('auth/me')
-        this.setUser(response.data)
+        this.setToken(data.token)
+        this.setUser(data.user)
 
         this.$router.push({ name: 'stores.choose' })
       } catch (error) {
