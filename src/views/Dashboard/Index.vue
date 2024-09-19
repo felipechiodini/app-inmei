@@ -1,7 +1,11 @@
 <template>
   <BaseIndex title="Home">
 
-
+    <div class="shadow p-4">
+      <a :href="`https://cardapio.rapideats.com.br/${store.slug}`" target="_blank">
+        Link do Cardapio
+      </a>
+    </div>
     
   </BaseIndex>
 </template>
