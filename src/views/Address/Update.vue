@@ -70,7 +70,15 @@ export default {
       requesFromStore()
         .get('address')
         .then(({ data }) => {
-          this.address = data.address
+          this.address = {
+            cep: data.address.cep,
+            street: data.address.street,
+            number: data.address.number,
+            neighborhood: data.address.neighborhood,
+            complement: data.address.complement,
+            city: data.address.city,
+            state: data.address.state,
+          }
         })
     },
     onSubmit() {
