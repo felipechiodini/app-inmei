@@ -1,6 +1,9 @@
 <template>
   <BaseIndex title="Endereço da Loja" subtitle="">
-    <div class="d-flex flex-column" v-if="isntLoading">
+    <button class="btn btn-primary" @click="$router.push({ name: 'address.update' })">
+      Editar
+    </button>
+    <div class="d-flex flex-column" v-if="address">
       <span>
         {{ address.street }},
         {{ address.number }},
@@ -42,12 +45,11 @@ export default {
   methods: {
     fetchAddress() {
       this.setLoading(true)
-      requesFromStore(this.$route.params.slug)
+      requesFromStore()
         .get('address')
         .then(({ data }) => this.address = data.address)
         .finally(() => this.setLoading(false))
     }
-
   }
 }
 </script>

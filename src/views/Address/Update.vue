@@ -1,6 +1,6 @@
 <template>
   <BaseIndex title="Editar Endereço da Loja">
-    <BaseForm :request="request">
+    <form @submit.prevent="onSubmit()">
       <div class="row">
         <div class="col-12 col-lg-6">
           <label for="address-cep">CEP</label>
@@ -31,7 +31,10 @@
           <input class="form-control" id="address-state" v-model="address.state" type="text">
         </div>
       </div>
-    </BaseForm>
+      <button type="submit" class="btn btn-primary mt-3">
+        Salvar
+      </button>
+    </form>
   </BaseIndex>
 </template>
 
@@ -55,7 +58,8 @@ export default {
         complement: null,
         city: null,
         state: null,
-      }
+      },
+      submiting: false
     }
   },
   mounted() {
@@ -65,11 +69,17 @@ export default {
     load() {
       requesFromStore()
         .get('address')
-        .then(({ data }) => this.address = data.address)
+        .then(({ data }) => {
+          this.address = data.address
+        })
     },
-    request() {
-      return requesFromStore()
+    onSubmit() {
+      this.submiting = true
+      requesFromStore()
         .post('address', this.address)
+        .then(() => this.$router.push({ name: 'address.index' }))
+        .catch(err => console.log(err))
+        .finally(() => this.submiting = false)
     }
   }
 }
