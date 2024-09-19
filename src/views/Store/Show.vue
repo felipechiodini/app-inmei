@@ -12,7 +12,6 @@
       <div class="col-12 col-lg-6">
         <label class="d-block">Logo</label>
         <div class="border text-center rounded p-2">
-          <img class="image-logo mb-2" :src="currentLogo" v-if="currentLogo">
           <img class="image-logo mb-2" :src="imagePreview" v-if="imagePreview">
           <input ref="input-file" @change="setFile" type="file" class="d-none">
           <div>
@@ -76,7 +75,7 @@ export default {
     },
     onSubmit() {
       requesFromStore()
-        .postForm('store?_method=PUT', { ...this.store, logo: this.fileToUpload })
+        .postForm('store?_method=PUT', { name: this.form.name, logo: this.fileToUpload })
         .then(() => alert('Alterações salvas'))
         .catch(error => console.log(error))
     },
