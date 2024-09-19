@@ -1,14 +1,8 @@
 <template>
-  <BaseIndex v-if="isCompleted === false" title="Complete o cadastro da loja">
-    <div class="d-flex align-items-center p-3 gap-3" v-for="(requirement, key) in store.completed_configured" :key="key">
-      <span class="fas fa-lock"></span>
-      <a @click.prevent="goToRequirement(requirement)"
-        :class="{ 'clickable': requirement.done === false, 'text-decoration-line-through': requirement.done === true }">
-        {{ requirement.name }}
-      </a>
-    </div>
-  </BaseIndex>
-  <BaseIndex v-else title="Dashboard">
+  <BaseIndex title="Home">
+
+
+    
   </BaseIndex>
 </template>
 
@@ -32,17 +26,15 @@ export default {
     }
   },
   computed: {
-    ...mapState(useStore, ['isCompleted', 'store'])
+    ...mapState(useStore, ['store'])
   },
   mounted() {
-    if (this.isCompleted) {
-      this.load()
-    }
+    this.load()
   },
   methods: {
     load() {
       requesFromStore(this.$route.params.slug)
-        .get('dashboard')
+        .get('home')
         .then(async ({ data }) => {
           this.dashboard = data.dashboard
 
@@ -68,18 +60,7 @@ export default {
               }
            });
         })
-    },
-    goToRequirement(requirement) {
-      if (requirement.done === true) return
-
-      this.$router.push({
-        name: requirement.router_name,
-        params: {
-          slug: this.$route.params.slug
-        }
-      })
     }
   }
-  
 }
 </script>

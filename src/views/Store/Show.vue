@@ -1,36 +1,32 @@
 <template>
   <BaseIndex title="Dados do Estabelecimento">
-    <BaseForm :request="request">
+    <form @submit.prevent="onSubmit()">
       <div class="col-12 col-lg-6">
         <label for="nome">Nome da Loja</label>
-        <input v-model="store.name" id="nome" class="form-control">
+        <input v-model="form.name" id="nome" class="form-control">
       </div>
       <div class="col-12 col-lg-6">
         <label for="slug">Identificador</label>
-        <input disabled v-model="store.slug" id="slug" class="form-control">
+        <input disabled v-model="form.slug" id="slug" class="form-control">
       </div>
       <div class="col-12 col-lg-6">
         <label class="d-block">Logo</label>
         <div class="border text-center rounded p-2">
-          <img class="image-logo mb-2" :src="logoImage">
+          <img class="image-logo mb-2" :src="currentLogo" v-if="currentLogo">
+          <img class="image-logo mb-2" :src="imagePreview" v-if="imagePreview">
           <input ref="input-file" @change="setFile" type="file" class="d-none">
           <div>
             <button type="button" class="btn btn-info btn-sm me-2" @click="openInputFile()">
               <span class="fas fa-upload"></span>
               Nova Foto
             </button>
-            <BaseButton
-              type="button"
-              @click="uploadNewPhoto()"
-              :loading="uploadingFile"
-              class="btn btn-primary btn-sm"
-              v-if="fileToUpload">
-              Salvar
-            </BaseButton>
           </div>
         </div>
       </div>
-    </BaseForm>
+      <button type="submit" class="btn btn-primary btn-sm">
+        Salvar
+      </button>
+    </form>
   </BaseIndex>
 </template>
 
@@ -50,40 +46,39 @@ export default {
   },
   data: () => {
     return {
+      currentLogo: null,
+      form: {
+        name: null,
+        slug: null
+      },
       fileToUpload: null,
-      uploadingFile: false,
       imagePreview: null
     }
   },
   computed: {
     ...mapState(useStore, ['store']),
-    logoImage() {
-      if (this.imagePreview !== null) {
-        return this.imagePreview
-      } else if (this.store?.logo !== null) {
-        return this.store.logo
-      } else {
-        return '/no-image.jpg'
-      }
-    }
+  },
+  mounted() {
+    this.load()
   },
   methods: {
+    load() {
+      const { store } = new useStore()
+
+      this.currentLogo = store.logo
+      this.form = {
+        name: store.name,
+        slug: store.slug,
+      }
+    },
     openInputFile() {
       this.$refs['input-file'].click()
     },
-    request() {
+    onSubmit() {
       requesFromStore()
-        .put('store', this.store)
-    },
-    uploadNewPhoto() {
-      this.uploadingFile = true
-      requesFromStore()
-        .postForm('store/logo', { logo: this.fileToUpload })
-        .then(() => {
-          this.fileToUpload = null
-          this.imagePreview = null
-        })
-        .finally(() => this.uploadingFile = false)
+        .post('store?_method=PUT', this.store)
+        .then(() => alert('Alterações salvas'))
+        .catch(error => console.log(error))
     },
     setFile({ target }) {
       this.fileToUpload = target.files[0]

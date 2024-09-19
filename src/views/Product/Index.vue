@@ -15,10 +15,7 @@
             {{ product.name }}
           </td>
           <td>
-            {{ product.price_from }}
-          </td>
-          <td>
-            {{ product.price_to }}
+            {{ product.price }}
           </td>
           <td>
             <RouterLink :to="{ name: 'product.update', params: { product_id: product.id }}">
