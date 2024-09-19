@@ -76,7 +76,7 @@ export default {
     },
     onSubmit() {
       requesFromStore()
-        .post('store?_method=PUT', this.store)
+        .postForm('store?_method=PUT', this.store)
         .then(() => alert('Alterações salvas'))
         .catch(error => console.log(error))
     },
