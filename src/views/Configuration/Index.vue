@@ -45,7 +45,9 @@ export default {
       requesFromStore()
         .get('configuration')
         .then(({ data }) => {
-          this.configuration = data.configuration
+          this.configuration = {
+            minimum_order_value: data.configuration.minimum_order_value,
+          }
         })
     },
     onSubmit() {
