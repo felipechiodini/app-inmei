@@ -12,6 +12,7 @@
       <div class="col-12 col-lg-6">
         <label class="d-block">Logo</label>
         <div class="border text-center rounded p-2">
+          <img class="image-logo mb-2" :src="store.logo" v-if="imagePreview === null">
           <img class="image-logo mb-2" :src="imagePreview" v-if="imagePreview">
           <input ref="input-file" @change="setFile" type="file" class="d-none">
           <div>

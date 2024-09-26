@@ -31,9 +31,9 @@
           <input class="form-control" id="address-state" v-model="address.state" type="text">
         </div>
       </div>
-      <button type="submit" class="btn btn-primary mt-3">
+      <BaseButton type="submit" class="btn btn-primary btn-sm mt-3" :loading="submiting">
         Salvar
-      </button>
+      </BaseButton>
     </form>
   </BaseIndex>
 </template>
@@ -42,11 +42,13 @@
 import BaseIndex from '@/components/BaseIndex.vue'
 import BaseForm from '@/components/BaseForm.vue'
 import { requesFromStore } from '@/js/api.js'
+import BaseButton from '@/components/BaseButton.vue';
 
 export default {
   components: {
     BaseIndex,
-    BaseForm
+    BaseForm,
+    BaseButton
   },
   data: () => {
     return {

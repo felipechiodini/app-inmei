@@ -1,8 +1,5 @@
 <template>
   <BaseIndex title="Endereço da Loja" subtitle="">
-    <button class="btn btn-primary" @click="$router.push({ name: 'address.update' })">
-      Editar
-    </button>
     <div class="d-flex flex-column" v-if="address">
       <span>
         {{ address.street }},
