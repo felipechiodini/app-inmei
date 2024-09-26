@@ -2,16 +2,16 @@
   <BaseIndex title="Configurações">
     <form @submit.prevent="onSubmit()">
       <div>
-        <label for="">Pedido Minimo</label>
+        <label for="">Valor Minimo para Pedidos</label>
         <input class="form-control" v-model="configuration.minimum_order_value" type="int">
       </div>
       <div>
-        <label for="">Tempo para Entrega</label>
-        <input class="form-control" v-model="configuration.delivery" type="text">
+        <label for="">Tempo para Entrega <small>(minutos)</small></label>
+        <input class="form-control" v-model="configuration.delivery" type="int">
       </div>
       <div>
-        <label for="">Tempo para Retidada</label>
-        <input class="form-control" v-model="configuration.withdrawal" type="text">
+        <label for="">Tempo para Retidada <small>(minutos)</small></label>
+        <input class="form-control" v-model="configuration.withdrawal" type="int">
       </div>
       <button type="submit" class="btn btn-primary mt-3">
         Salvar
