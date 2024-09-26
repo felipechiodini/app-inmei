@@ -1,25 +1,13 @@
 <template>
   <BaseIndex title="Tipos de Pagamentos" subtitle="Controle os tipos de pagamentos aceitos por seu estabelecimento">
-    <table class="table border">
-      <thead>
-        <tr>
-          <th>Ativo</th>
-          <th>Nome</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(payment, key) in payments" :key="key">
-          <td>{{ yesNoLabel(payment.active) }}</td>
-          <td>{{ payment.name }}</td>
-          <td>
-            <RouterLink :to="{ name: 'payment.update', params: { type: payment.type }}">
-              Editar
-            </RouterLink>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="d-flex flex-column">
+      <div class="d-flex" v-for="(payment, key) in payments" :key="key">
+        <td>{{ payment.name }}</td>
+        <button class="btn btn-primary btn-sm" @click="active(payment)">
+          {{ payment.active === false ? 'Ativar' : 'Desativar' }}
+        </button>
+      </div>
+    </div>
   </BaseIndex>
 </template>
 
@@ -48,11 +36,10 @@ export default {
         .then(({ data }) => this.payments = data.payments)
     },
     active(payment) {
+      console.log(payment)
       requesFromStore(this.$route.params.slug)
-        .post(`payment/${payment.key}/status`, { active: true })
-        .then(({ data }) => {
-          
-        })
+        .post(`payment/${payment.key}/status`)
+        .then(({ data }) => this.payments.find(p => p.key === data.key).active = !this.payments.find(p => p.key === data.key).active)
     }
   }
 
