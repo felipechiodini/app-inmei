@@ -36,10 +36,9 @@ export default {
         .then(({ data }) => this.payments = data.payments)
     },
     active(payment) {
-      console.log(payment)
       requesFromStore(this.$route.params.slug)
         .post(`payment/${payment.key}/status`)
-        .then(({ data }) => this.payments.find(p => p.key === data.key).active = !this.payments.find(p => p.key === data.key).active)
+        .then(() => this.load())
     }
   }
 
