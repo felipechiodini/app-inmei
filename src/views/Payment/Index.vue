@@ -1,29 +1,32 @@
 <template>
   <BaseIndex title="Tipos de Pagamentos" subtitle="Controle os tipos de pagamentos aceitos por seu estabelecimento">
-    <div class="d-flex flex-column">
-      <div class="d-flex" v-for="(payment, key) in payments" :key="key">
+    <div class="d-flex flex-column gap-4">
+      <div class="d-flex shadow p-3 rounded" v-for="(payment, key) in payments" :key="key">
         <td>{{ payment.name }}</td>
-        <button class="btn btn-primary btn-sm" @click="active(payment)">
+        <BaseButton :loading="loading" class="btn btn-primary btn-sm ms-auto" @click="active(payment)">
           {{ payment.active === false ? 'Ativar' : 'Desativar' }}
-        </button>
+        </BaseButton>
       </div>
     </div>
   </BaseIndex>
 </template>
 
 <script>
+import BaseButton from '@/components/BaseButton.vue';
 import BaseIndex from '@/components/BaseIndex.vue'
 import { requesFromStore } from '@/js/api.js'
 import YesNoLabel from '@/js/Mixins/YesNoLabel.js'
 
 export default {
   components: {
-    BaseIndex
+    BaseIndex,
+    BaseButton
   },
   mixins: [YesNoLabel],
   data: () => {
     return {
-      payments: []
+      payments: [],
+      loading: false
     }
   },
   mounted() {
@@ -36,9 +39,11 @@ export default {
         .then(({ data }) => this.payments = data.payments)
     },
     active(payment) {
-      requesFromStore(this.$route.params.slug)
+      this.loading = true
+      requesFromStore()
         .post(`payment/${payment.key}/status`)
-        .then(() => this.load())
+        .then(() => payment.active = !payment.active)
+        .finally(() => this.loading = false)
     }
   }
 
