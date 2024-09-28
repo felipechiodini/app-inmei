@@ -1,12 +1,12 @@
 <template>
-  <BaseIndex title="Tipos de Pagamentos" subtitle="Controle os tipos de pagamentos aceitos por seu estabelecimento">
+  <BaseIndex title="Tipos de Entregas" subtitle="Controle os tipos de entregas aceitos por seu estabelecimento">
     <div class="d-flex flex-column gap-4">
-      <div class="d-flex shadow p-3 rounded" v-for="(payment, key) in deliveries" :key="key">
-        <td>{{ payment.name }}</td>
+      <div class="d-flex shadow p-3 rounded" v-for="(delivery, key) in deliveries" :key="key">
+        <td>{{ delivery.name }}</td>
         <div class="d-flex gap-2 ms-auto">
-          <!-- <BaseButton :loading="loading" class="btn btn-primary btn-sm" @click="active(payment)">
-            {{ payment.active === false ? 'Ativar' : 'Desativar' }}
-          </BaseButton> -->
+          <BaseButton :loading="loading" class="btn btn-primary btn-sm" @click="active(delivery)">
+            {{ delivery.active === false ? 'Ativar' : 'Desativar' }}
+          </BaseButton>
         </div>
       </div>
     </div>
@@ -14,17 +14,15 @@
 </template>
 
 <script>
-import BaseButton from '@/components/BaseButton.vue';
 import BaseIndex from '@/components/BaseIndex.vue'
+import BaseButton from '@/components/BaseButton.vue';
 import { requesFromStore } from '@/js/api.js'
-import YesNoLabel from '@/js/Mixins/YesNoLabel.js'
 
 export default {
   components: {
     BaseIndex,
     BaseButton
   },
-  mixins: [YesNoLabel],
   data: () => {
     return {
       deliveries: [],
@@ -42,11 +40,11 @@ export default {
         .get('delivery')
         .then(({ data }) => this.deliveries = data.deliveries)
     },
-    active(payment) {
+    active(delivery) {
       this.loading = true
       requesFromStore()
-        .post(`payment/${payment.key}/status`)
-        .then(() => payment.active = !payment.active)
+        .post(`delivery/${delivery.key}/status`)
+        .then(() => delivery.active = !delivery.active)
         .finally(() => this.loading = false)
     }
   }

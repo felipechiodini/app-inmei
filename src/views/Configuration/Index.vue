@@ -5,7 +5,11 @@
         <label for="">Valor Minimo para Pedidos</label>
         <Money3 class="form-control" v-model.lazy="configuration.minimum_order_value" v-money3="config" />
       </div>
-      <BaseButton type="submit" class="btn btn-primary btn-sm mt-3">
+      <div>
+        <label for="warning">Aviso</label>
+        <textarea class="form-control" name="" id="warning" v-model="configuration.warning"></textarea>
+      </div>
+      <BaseButton type="submit" class="btn btn-primary btn-sm mt-3" :loading="submiting">
         Salvar
       </BaseButton>
     </form>
@@ -34,8 +38,10 @@ export default {
         masked: false
       },
       configuration: {
-        minimum_order_value: null
-      }
+        minimum_order_value: null,
+        warning: null
+      },
+      submiting: false
     }
   },
   mounted() {
@@ -48,13 +54,16 @@ export default {
         .then(({ data }) => {
           this.configuration = {
             minimum_order_value: data.configuration.minimum_order_value,
+            warning: data.configuration.warning
           }
         })
     },
     onSubmit() {
+      this.submiting = true
       requesFromStore()
         .post('configuration', this.configuration)
         .then(() => this.load())
+        .finally(() => this.submiting = false)
     }
   }
 }

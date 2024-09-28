@@ -171,9 +171,7 @@ export default {
       this.orders = null
       requesFromStore(this.$route.params.slug)
         .get('order-manager', { params: { ...this.filters } })
-        .then(({ data }) => {
-          this.orders = data.orders
-        })
+        .then(({ data }) => this.orders = data.orders)
     },
     getOrderStatusBadge(status) {
       const statusColor = {
