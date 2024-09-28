@@ -13,10 +13,10 @@
       <span>
         {{ address.city }} - {{ address.state }}
       </span>
-      <button class="btn btn-primary w-25 mt-3" @click="$router.push({ name: 'address.update' })">
-        Editar Endereço
-      </button>
     </div>
+    <button class="btn btn-primary w-25 mt-3" @click="$router.push({ name: 'address.update' })">
+      Editar Endereço
+    </button>
   </BaseIndex>
 </template>
 
