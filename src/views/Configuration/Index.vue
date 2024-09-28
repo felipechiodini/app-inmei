@@ -3,7 +3,7 @@
     <form @submit.prevent="onSubmit()">
       <div>
         <label for="">Valor Minimo para Pedidos</label>
-        <input class="form-control" v-model.lazy="configuration.minimum_order_value" v-money3="config">
+        <Money3 class="form-control" v-model.lazy="configuration.minimum_order_value" v-money3="config" />
 
         {{configuration.minimum_order_value}}
       </div>
@@ -18,11 +18,13 @@
 import BaseButton from '@/components/BaseButton.vue'
 import BaseIndex from '@/components/BaseIndex.vue'
 import { requesFromStore } from '@/js/api'
+import { Money3 } from 'v-money3';
 
 export default {
   components: {
     BaseIndex,
-    BaseButton
+    BaseButton,
+    Money3
   },
   data() {
     return {
