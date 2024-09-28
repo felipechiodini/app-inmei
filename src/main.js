@@ -8,7 +8,7 @@ import router from './router'
 import PrimeVue from 'primevue/config'
 import ToastService from 'primevue/toastservice'
 import { Money3Directive } from 'v-money3'
-import Modal from './js/Plugins/Modal'
+// import Modal from './js/Plugins/Modal'
 import { request } from '@/js/api.js'
 import General from '@/js/Mixins/General.js'
 import { vMaska } from 'maska'
@@ -50,7 +50,7 @@ pinia.use(piniaPluginPersistedstate)
 app.directive('money', Money3Directive)
 app.use(ToastService)
 app.mixin(General)
-app.use(Modal)
+// app.use(Modal)
 app.use(PrimeVue)
 app.directive('maska', vMaska)
 app.use(pinia)
