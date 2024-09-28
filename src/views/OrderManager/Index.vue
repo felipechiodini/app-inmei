@@ -21,7 +21,7 @@
                 <span class="ms-2 order-number text-muted">#{{ order.id }}</span>
                 <span class="ms-auto">{{ order.payment_type }} • {{ order.total }}</span>
               </div>
-              <span class="badge badge-custom" :class="getOrderStatusBadge(status)">
+              <span class="badge badge-custom" :class="getOrderStatusBadge(order.status)">
                 {{ order.status_label }}
               </span>
               <span>
