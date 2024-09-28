@@ -1,43 +1,36 @@
 <template>
-  <BaseIndex title="Tipos de Entrega" subtitle="Configure informações sobre entrega e retirada">
-    <table class="table border">
-      <thead>
-        <tr>
-          <th>Ativo</th>
-          <th>Nome</th>
-          <th>Tempo de Entrega</th>
-          <th></th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="(delivery, key) in deliveries" :key="key">
-          <td>{{ yesNoLabel(delivery.active) }}</td>
-          <td>{{ delivery.name }}</td>
-          <td>{{ delivery.minutes ?? '-' }}</td>
-          <td>
-            <RouterLink :to="{ name: 'delivery.update', params: { type: delivery.type }}">
-              Editar
-            </RouterLink>
-          </td>
-        </tr>
-      </tbody>
-    </table>
+  <BaseIndex title="Tipos de Pagamentos" subtitle="Controle os tipos de pagamentos aceitos por seu estabelecimento">
+    <div class="d-flex flex-column gap-4">
+      <div class="d-flex shadow p-3 rounded" v-for="(payment, key) in deliveries" :key="key">
+        <td>{{ payment.name }}</td>
+        <div class="d-flex gap-2 ms-auto">
+          <!-- <BaseButton :loading="loading" class="btn btn-primary btn-sm" @click="active(payment)">
+            {{ payment.active === false ? 'Ativar' : 'Desativar' }}
+          </BaseButton> -->
+        </div>
+      </div>
+    </div>
   </BaseIndex>
 </template>
 
 <script>
+import BaseButton from '@/components/BaseButton.vue';
 import BaseIndex from '@/components/BaseIndex.vue'
-import YesNoLabel from '@/js/Mixins/YesNoLabel.js'
 import { requesFromStore } from '@/js/api.js'
+import YesNoLabel from '@/js/Mixins/YesNoLabel.js'
 
 export default {
   components: {
-    BaseIndex
+    BaseIndex,
+    BaseButton
   },
   mixins: [YesNoLabel],
   data: () => {
     return {
-      deliveries: []
+      deliveries: [],
+      loading: false,
+      selectedPayment: null,
+      value: null
     }
   },
   mounted() {
@@ -47,10 +40,31 @@ export default {
     load() {
       requesFromStore()
         .get('delivery')
-        .then(({ data }) => {
-          this.deliveries = data.deliveries
-        })
+        .then(({ data }) => this.deliveries = data.deliveries)
+    },
+    active(payment) {
+      this.loading = true
+      requesFromStore()
+        .post(`payment/${payment.key}/status`)
+        .then(() => payment.active = !payment.active)
+        .finally(() => this.loading = false)
     }
   }
+
 }
 </script>
+
+<style>
+
+.ddddddddd {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: #0000005c;
+  z-index: 10;
+}
+
+</style>
