@@ -4,8 +4,6 @@
       <div>
         <label for="">Valor Minimo para Pedidos</label>
         <Money3 class="form-control" v-model.lazy="configuration.minimum_order_value" v-money3="config" />
-
-        {{configuration.minimum_order_value}}
       </div>
       <BaseButton type="submit" class="btn btn-primary btn-sm mt-3">
         Salvar
