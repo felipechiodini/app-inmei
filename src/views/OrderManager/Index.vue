@@ -21,14 +21,14 @@
                 <span class="ms-2 order-number text-muted">#{{ order.id }}</span>
                 <span class="ms-auto">{{ order.payment_type }} • {{ order.total }}</span>
               </div>
-              <span class="badge badge-custom" :class="getOrderStatusBadge(order)">
+              <span class="badge badge-custom" :class="getOrderStatusBadge(status)">
                 {{ order.status_label }}
               </span>
               <span>
-                {{ order.neighborhood }} - {{ order.distance }}
+                {{ order.neighborhood }}
               </span>
               <span>
-                {{ formatOrderSince(order.ordered_since) }}
+                {{ order.ordered_since }}
               </span>
             </div>  
           </template>
@@ -175,7 +175,7 @@ export default {
           this.orders = data.orders
         })
     },
-    getOrderStatusBadge(order) {
+    getOrderStatusBadge(status) {
       const statusColor = {
         1: 'bg-primary',
         2: 'bg-info',
@@ -184,7 +184,7 @@ export default {
         5: 'bg-warning',
       }
 
-      return statusColor[order.status]
+      return statusColor[status]
     },
     doNextStep() {
       requesFromStore(this.$route.params.slug)
