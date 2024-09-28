@@ -12,6 +12,7 @@ import Modal from './js/Plugins/Modal'
 import { request } from '@/js/api.js'
 import General from '@/js/Mixins/General.js'
 import { vMaska } from 'maska'
+import money from 'v-money3'
 
 import './assets/main.scss'
 import 'primevue/resources/themes/aura-light-green/theme.css'
@@ -53,5 +54,6 @@ app.use(Modal)
 app.use(PrimeVue)
 app.directive('maska', vMaska)
 app.use(pinia)
+app.use(money)
 app.use(router)
 app.mount('#app')
