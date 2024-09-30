@@ -1,7 +1,6 @@
 <template>
   <TemplateLogin>
     <div class="d-flex flex-column justify-content-center h-100 px-4">
-      <img width="150px" src="/logo.png">
       <h1>Login</h1>
       <p>Acesse sua conta para gerenciar sua loja.</p>
       <form class="d-flex flex-column" novalidate @submit.prevent="onSubmit()">
@@ -19,11 +18,8 @@
         </SubmitButton>
       </form>
       <div class="d-flex flex-wrap align-items-end mt-5 gap-2">
-        <span style="font-size: .9rem;">
-          Ainda não administra seu delivery com a Rapideats?
-        </span>
         <RouterLink :to="{ name: 'register' }">
-          Começar agora
+          Criar conta
         </RouterLink>
       </div>
     </div>
