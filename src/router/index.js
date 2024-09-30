@@ -26,7 +26,7 @@ const router = createRouter({
       name: 'index',
       redirect: to => {
         return {
-          name: 'stores.choose'
+          name: 'home'
         }
       },
       meta: {
