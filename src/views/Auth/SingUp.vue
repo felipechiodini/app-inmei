@@ -73,12 +73,10 @@ export default {
   methods: {
     ...mapActions(useUserStore, ['setToken', 'setUser', 'setMenus']),
     async onSubmit() {
-      this.submiting = true
-
-      const token = await grecaptcha.execute(import.meta.env.VITE_RECAPTHCA_KEY, { action: 'submit' })
-
       try {
-        const { data } = await request().post('user', { ...this.form, recaptcha_token: token })
+        this.submiting = true
+        const token = await grecaptcha.execute(import.meta.env.VITE_RECAPTHCA_KEY, { action: 'submit' })
+        const { data } = await request().post('sing-up', { ...this.form, recaptcha_token: token })
 
         this.setToken(data.token)
         this.setUser(data.user)

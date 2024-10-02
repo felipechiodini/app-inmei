@@ -54,20 +54,19 @@ export default {
       },
       errors: new useValidationErrors(),
       submiting: false,
-      link: freeTest()
     }
   },
   methods: {
     ...mapActions(useUserStore, ['setToken', 'setUser', 'setMenus']),
     async onSubmit() {
-      this.submiting = true
-
       try {
-        const { data } = await request().post('auth/login', this.form)
+        this.submiting = true
+        const { data } = await request().post('sing-in', this.form)
         this.setToken(data.token)
         this.setUser(data.user)
         this.$router.push({ name: 'home' })
       } catch (error) {
+        console.log(error)
         this.errors.record(error.response.data.errors)
       }
 
