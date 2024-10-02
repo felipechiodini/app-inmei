@@ -10,6 +10,9 @@
         <label for="login-email">Email</label>
         <input class="form-control" id="login-email" type="email" v-model="form.email" />
         <BaseError>{{ errors.get('email') }}</BaseError>
+        <label for="cpf">CPF</label>
+        <input class="form-control" id="cpf" type="email" v-model="form.document" />
+        <BaseError>{{ errors.get('document') }}</BaseError>
         <label for="login-cellphone" class="mt-2">Celular</label>
         <input class="form-control"  v-maska data-maska="(##) #####-####" id="login-cellphone" type="tel" v-model="form.cellphone" />
         <BaseError>{{ errors.get('cellphone') }}</BaseError>
@@ -64,6 +67,7 @@ export default {
         name: null,
         email: null,
         password: null,
+        document: null,
         cellphone: null
       },
       errors: new useValidationErrors(),
